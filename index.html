@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneDeal — iPhone, Samsung & PC Neufs & Occasion</title>
+    <meta name="description" content="iPhone, Samsung, PC portables et fixes neufs et occasion. Garantie jusqu'à 12 mois • Paiement sécurisé">
+
+    <style>
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f5e8b3;
+            --bg: #05070f;
+            --bg2: #0a0f1c;
+            --card: #1a2338;
+            --text: #e2e8f0;
+            --text-dim: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ── LOGO ANIMÉ ── */
+        .logo {
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            background: linear-gradient(90deg, #f5e8b3, #d4af37, #fff8dc, #b38b2e, #f5e8b3);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            animation: logoShine 3s linear infinite, logoPulse 4s ease-in-out infinite;
+            position: relative;
+        }
+        .logo::after {
+            content: '';
+            position: absolute;
+            inset: -4px -8px;
+            background: radial-gradient(ellipse, rgba(212,175,55,0.3) 0%, transparent 70%);
+            border-radius: 10px;
+            animation: logoGlow 4s ease-in-out infinite;
+            z-index: -1;
+        }
+        @keyframes logoShine {
+            0%   { background-position: 0% center; }
+            100% { background-position: 300% center; }
+        }
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50%       { transform: scale(1.05); }
+        }
+        @keyframes logoGlow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50%       { opacity: 1;   transform: scale(1.2); }
+        }
+
+        /* ── TOP BAR ── */
+        .topbar {
+            background: #111827;
+            padding: 11px 16px;
+            text-align: center;
+            border-bottom: 1px solid var(--gold);
+            font-size: 13.5px;
+            line-height: 1.5;
+        }
+
+        /* ── NAV ── */
+        nav {
+            background: rgba(10,15,28,0.98);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(212,175,55,0.3);
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 62px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 28px;
+        }
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--gold); }
+
+        .btn-wa {
+            background: #25D366;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 14px;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 6px;
+        }
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: #0a0f1c;
+            border-top: 1px solid rgba(212,175,55,0.15);
+            padding: 16px 20px;
+            gap: 2px;
+        }
+        .mobile-menu a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 13px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: block;
+        }
+        .mobile-menu .btn-wa {
+            margin-top: 12px;
+            justify-content: center;
+        }
+        .mobile-menu.open { display: flex; }
+
+        /* ── HERO ── */
+        .hero {
+            background:
+                linear-gradient(rgba(5,7,15,0.78), rgba(5,7,15,0.78)),
+                url('https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=2000&auto=format&fit=crop') center/cover no-repeat,
+                linear-gradient(135deg, #050d1a 0%, #0a1628 50%, #06091a 100%);
+            min-height: 88vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 60px 20px;
+        }
+        .hero-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            z-index: 2;
+            position: relative;
+        }
+        .hero h1 {
+            font-size: clamp(36px, 8vw, 80px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            color: #fff;
+        }
+        .hero h1 span { color: var(--gold); }
+        .hero-sub {
+            font-size: clamp(15px, 2.5vw, 20px);
+            color: var(--text-dim);
+            margin: 20px 0 38px;
+            line-height: 1.7;
+        }
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        /* Floating emojis */
+        .float-emoji {
+            position: absolute;
+            font-size: 80px;
+            opacity: 0.1;
+            animation: floatUp 12s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .float-emoji.e1 { top: 15%; left: 5%; animation-delay: 0s; }
+        .float-emoji.e2 { bottom: 15%; right: 5%; font-size: 100px; animation-delay: 4s; }
+        @keyframes floatUp {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50%       { transform: translateY(-20px) rotate(3deg); }
+        }
+
+        /* ── BOUTONS ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.25s, box-shadow 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -60%; left: -60%;
+            width: 50%; height: 220%;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.25), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.6s;
+            opacity: 0;
+        }
+        .btn:hover::after { opacity: 1; left: 130%; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+        .btn:active { transform: translateY(0); }
+
+        .btn-ebay  { background: #0064D2; color: #fff; }
+        .btn-fb    { background: #1877F2; color: #fff; }
+        .btn-boncoin { background: #E8460C; color: #fff; }
+        .btn-green { background: #25D366; color: #000; }
+        .btn-blue  { background: #3b82f6; color: #fff; }
+        .btn-gold  { background: var(--gold); color: #000; }
+        .btn-slate { background: #334155; color: #fff; }
+
+        /* ── SECTIONS ── */
+        .section { padding: 80px 20px; }
+        .section-dark  { background: var(--bg2); }
+        .section-black { background: var(--bg); }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(26px, 5vw, 40px);
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 50px;
+            letter-spacing: -1px;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        /* ── GRID ── */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ── CARDS ── */
+        .card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 30px 24px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            cursor: pointer;
+            text-align: center;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-color: rgba(212,175,55,0.3);
+        }
+        .card h3 { font-size: 18px; margin-bottom: 10px; }
+        .card p { color: var(--text-dim); font-size: 14px; line-height: 1.6; }
+
+        /* ── BADGES ── */
+        .badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 40px;
+        }
+        .badge {
+            background: var(--card);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 12px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 13.5px;
+            transition: all 0.25s;
+        }
+        .badge:hover { border-color: var(--gold); transform: translateY(-3px); }
+        .badge-icon { font-size: 20px; }
+
+        /* ── BOUTONS FLOTTANTS ── */
+        .fab-wrap {
+            position: fixed;
+            right: 18px;
+            z-index: 9999;
+        }
+        .fab-wrap-pay { bottom: 100px; }
+        .fab-wrap-cgv { bottom: 22px; }
+        .fab {
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            color: white;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+            line-height: 1.3;
+            text-align: center;
+            gap: 2px;
+            animation: fabFloat 3.5s ease-in-out infinite;
+            transition: transform 0.2s;
+        }
+        .fab-pay { background: linear-gradient(135deg, #1e3a8a, #2563eb); }
+        .fab-cgv { background: var(--gold); color: #000; animation-delay: 1s; }
+        .fab span.fab-icon { font-size: 20px; }
+        @keyframes fabFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50%       { transform: translateY(-8px) scale(1.03); }
+        }
+        .fab:hover { animation-play-state: paused; transform: scale(1.12); box-shadow: 0 12px 30px rgba(0,0,0,0.6); }
+
+        /* ── FOOTER ── */
+        footer {
+            background: #03060f;
+            padding: 60px 20px 40px;
+            text-align: center;
+            border-top: 2px solid var(--gold);
+        }
+        .footer-btns {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 22px 0 16px;
+        }
+
+        /* ── MODALES ── */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.93);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal.open { display: flex; }
+        .modal-box {
+            background: #0f1625;
+            width: 100%;
+            max-width: 560px;
+            padding: 32px 24px;
+            border-radius: 18px;
+            border: 1px solid rgba(212,175,55,0.4);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-title {
+            color: var(--gold);
+            font-size: clamp(18px, 4vw, 24px);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .modal-list { list-style: none; line-height: 2.2; font-size: 15.5px; }
+        .modal-close {
+            margin-top: 20px;
+            padding: 13px;
+            background: #1e293b;
+            color: var(--text);
+            border: none;
+            border-radius: 50px;
+            width: 100%;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .modal-close:hover { background: #334155; }
+
+        /* ══════════════════════
+           RESPONSIVE MOBILE
+        ══════════════════════ */
+        @media (max-width: 768px) {
+            .nav-links, .nav-wa-desktop { display: none; }
+            .hamburger { display: flex; }
+
+            .hero { min-height: 78vh; padding: 48px 16px; }
+            .float-emoji { display: none; }
+
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-btns .btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+
+            .section { padding: 56px 16px; }
+            .section-title { margin-bottom: 36px; }
+
+            .grid-3 { grid-template-columns: 1fr; gap: 14px; }
+            .grid-2 { grid-template-columns: 1fr; gap: 14px; }
+
+            .card { padding: 24px 18px; }
+
+            .fab { width: 54px; height: 54px; right: 14px; font-size: 9px; }
+            .fab span.fab-icon { font-size: 18px; }
+            .fab-wrap-pay { bottom: 90px; right: 14px; }
+            .fab-wrap-cgv { bottom: 20px; right: 14px; }
+
+            .badge { font-size: 13px; padding: 10px 14px; }
+
+            .footer-btns .btn { flex: 1 1 130px; justify-content: center; }
+
+            .logo { font-size: 30px; }
+        }
+
+        @media (max-width: 400px) {
+            .hero h1 { font-size: 30px; letter-spacing: -1px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+    <strong>Neuf & Occasion</strong> — Garantie &amp; Paiement en plusieurs fois
+</div>
+
+<!-- Navigation -->
+<nav>
+    <div class="nav-inner">
+        <div class="logo">PhoneDeal</div>
+
+        <div class="nav-links">
+            <a href="#services">Services</a>
+            <a href="#securise">Sécurité</a>
+            <a href="#pourquoi">Pourquoi nous</a>
+            <a href="#" onclick="openAvis(); return false;">Avis</a>
+        </div>
+
+        <a href="https://wa.me/33759089612" target="_blank" rel="noopener" class="btn-wa nav-wa-desktop">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.535 5.847L.057 23.882l6.224-1.632A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.372l-.36-.214-3.726.977.994-3.634-.235-.374A9.818 9.818 0 1112 21.818z"/></svg>
+            WhatsApp
+        </a>
+
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#services"  onclick="closeMenu()">📱 Services</a>
+        <a href="#securise"  onclick="closeMenu()">🛡️ Sécurité</a>
+        <a href="#pourquoi"  onclick="closeMenu()">✅ Pourquoi nous</a>
+        <a href="#"          onclick="openAvis(); closeMenu(); return false;">⭐ Avis</a>
+        <a href="https://wa.me/33759089612" target="_blank" rel="noopener" class="btn btn-green btn-wa" onclick="closeMenu()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.535 5.847L.057 23.882l6.224-1.632A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.372l-.36-.214-3.726.977.994-3.634-.235-.374A9.818 9.818 0 1112 21.818z"/></svg>
+            WhatsApp
+        </a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="float-emoji e1">📱</div>
+    <div class="float-emoji e2">💻</div>
+    <div class="hero-inner">
+        <h1>TÉLÉPHONES &amp; PC<br><span>NEUFS &amp; OCCASION</span></h1>
+        <p class="hero-sub">iPhone • Samsung • PC Portables &amp; Fixes<br>Qualité vérifiée • Garantie jusqu'à 12 mois</p>
+        <div class="hero-btns">
+            <a href="https://www.ebay.fr/usr/phonedeal" target="_blank" rel="noopener" class="btn btn-ebay">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2.252 9.376C.959 9.376 0 10.334 0 11.628s.959 2.252 2.252 2.252c1.293 0 2.252-.958 2.252-2.252S3.545 9.376 2.252 9.376zm0 3.752c-.829 0-1.5-.671-1.5-1.5s.671-1.5 1.5-1.5 1.5.671 1.5 1.5-.671 1.5-1.5 1.5zM6.375 9.5v4.5h.75v-1.875h1.5c.829 0 1.5-.671 1.5-1.5S9.454 9.5 8.625 9.5h-2.25zm.75.75h1.5c.414 0 .75.336.75.75s-.336.75-.75.75h-1.5V10.25zm3.75-.75v4.5h2.25c1.243 0 2.25-1.007 2.25-2.25S14.368 9.5 13.125 9.5h-2.25zm.75.75h1.5c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5h-1.5V10.25zm4.5-.75v4.5h3.75V13.25h-3v-1.125h3v-.75h-3V10.25h3V9.5h-3.75z"/></svg>
+                Mon profil eBay
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61589832024475" target="_blank" rel="noopener" class="btn btn-fb">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                Facebook Marketplace
+            </a>
+            <!-- LEBONCOIN : remplace le # par ton lien profil quand tu l'auras -->
+            <a href="#" class="btn btn-boncoin">
+                🏷️ Le Bon Coin
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- Boutons flottants -->
+<div class="fab-wrap fab-wrap-pay">
+    <button class="fab fab-pay" onclick="openPayment()">
+        <span class="fab-icon">💳</span>
+        <span>Paiement</span>
+    </button>
+</div>
+<div class="fab-wrap fab-wrap-cgv">
+    <button class="fab fab-cgv" onclick="openCGV()">
+        <span class="fab-icon">📄</span>
+        <span>CGV</span>
+    </button>
+</div>
+
+<!-- Pourquoi nous -->
+<section id="pourquoi" class="section section-dark">
+    <div class="container">
+        <h2 class="section-title">Pourquoi nous choisir ?</h2>
+        <div class="grid-3">
+            <div class="card">
+                <div style="font-size:36px; margin-bottom:14px;">✅</div>
+                <h3>Garantie 3 à 12 mois</h3>
+                <p>Chaque appareil est garanti selon son état</p>
+            </div>
+            <div class="card">
+                <div style="font-size:36px; margin-bottom:14px;">🚚</div>
+                <h3>Livraison rapide</h3>
+                <p>Expédition soignée et rapide partout en France</p>
+            </div>
+            <div class="card">
+                <div style="font-size:36px; margin-bottom:14px;">🔍</div>
+                <h3>Produits testés</h3>
+                <p>Chaque produit est testé et vérifié avant envoi</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sécurité -->
+<section id="securise" class="section section-black">
+    <div class="container" style="text-align:center;">
+        <h2 class="section-title">🛡️ Achetez en Toute Sécurité</h2>
+        <p style="font-size:clamp(15px,2.5vw,19px); color:var(--text-dim); margin-bottom:40px; max-width:650px; margin-left:auto; margin-right:auto; line-height:1.7;">
+            Retrouvez tous nos produits sur les plateformes les plus sécurisées
+        </p>
+        <div class="grid-3">
+            <div class="card" style="border: 1px solid rgba(0,100,210,0.4);">
+                <div style="font-size:32px; margin-bottom:12px;">🔨</div>
+                <h3 style="color:#4d9fff;">eBay</h3>
+                <p style="margin:10px 0 18px;">Visitez notre profil eBay pour des achats 100% sécurisés — Facture &amp; garantie incluses dans la boîte après chaque achat. Les acheteurs bénéficient automatiquement de la garantie client eBay.</p>
+                <a href="https://www.ebay.fr/usr/phonedeal" target="_blank" rel="noopener" class="btn btn-ebay" style="font-size:13px; padding:11px 20px; margin-top:4px;">
+                    🛒 Voir notre profil eBay
+                </a>
+            </div>
+            <div class="card">
+                <div style="font-size:32px; margin-bottom:12px;">📘</div>
+                <h3>Facebook Marketplace</h3>
+                <p style="margin:10px 0 18px;">Transactions locales • Contact direct</p>
+                <a href="https://www.facebook.com/profile.php?id=61589832024475" target="_blank" rel="noopener" class="btn btn-fb" style="font-size:13px; padding:11px 20px; margin-top:4px;">
+                    👤 Voir mon profil
+                </a>
+            </div>
+            <!-- LEBONCOIN : remplace le # par ton lien profil quand tu l'auras -->
+            <div class="card" style="border: 1px solid rgba(232,70,12,0.4);">
+                <div style="font-size:32px; margin-bottom:12px;">🏷️</div>
+                <h3 style="color:#ff7043;">Le Bon Coin</h3>
+                <p style="margin:10px 0 18px;">Retrouvez nos annonces sur Le Bon Coin — contact direct, transactions locales ou envoi possible</p>
+                <a href="#" class="btn btn-boncoin" style="font-size:13px; padding:11px 20px; margin-top:4px;">
+                    🔍 Voir nos annonces
+                </a>
+            </div>
+        </div>
+        <div class="badges">
+            <div class="badge"><span class="badge-icon">🔒</span> Paiement SSL Sécurisé</div>
+            <div class="badge"><span class="badge-icon">🛡️</span> Garantie Client eBay</div>
+            <div class="badge"><span class="badge-icon">🏅</span> Vendeur Fiable</div>
+        </div>
+    </div>
+</section>
+
+<!-- Services -->
+<section id="services" class="section section-dark">
+    <div class="container">
+        <h2 class="section-title">Nos Services</h2>
+        <div class="grid-3">
+            <div class="card" onclick="showService(0)">
+                <div style="font-size:36px; margin-bottom:14px;">📱</div>
+                <h3 style="color:var(--gold);">Réparation Téléphone</h3>
+                <p style="margin-top:8px;">Appuyez pour voir les détails</p>
+            </div>
+            <div class="card" onclick="showService(1)">
+                <div style="font-size:36px; margin-bottom:14px;">💻</div>
+                <h3 style="color:var(--gold);">Réparation PC</h3>
+                <p style="margin-top:8px;">Appuyez pour voir les détails</p>
+            </div>
+            <div class="card" onclick="showService(2)">
+                <div style="font-size:36px; margin-bottom:14px;">🔄</div>
+                <h3 style="color:var(--gold);">Restauration Données</h3>
+                <p style="margin-top:8px;">Appuyez pour voir les détails</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="logo" style="font-size:28px; margin-bottom:14px;">PhoneDeal</div>
+    <p style="font-size:16px; color:var(--text-dim); margin-bottom:4px;">Contactez-nous</p>
+    <div class="footer-btns">
+        <a href="https://wa.me/33759089612" target="_blank" rel="noopener" class="btn btn-green">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.535 5.847L.057 23.882l6.224-1.632A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.372l-.36-.214-3.726.977.994-3.634-.235-.374A9.818 9.818 0 1112 21.818z"/></svg>
+            WhatsApp
+        </a>
+        <a href="mailto:phonedealfrance@gmail.com" class="btn btn-blue">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Email
+        </a>
+    </div>
+    <p style="color:var(--text-dim); font-size:14px;">📧 phonedealfrance@gmail.com</p>
+    <p style="margin-top:28px; color:var(--text-dim); font-size:12px; opacity:0.5;">© 2026 PhoneDeal France</p>
+</footer>
+
+<!-- Modal Services -->
+<div id="serviceModal" class="modal">
+    <div class="modal-box">
+        <h2 id="modalTitle" class="modal-title"></h2>
+        <ul id="modalList" class="modal-list"></ul>
+        <div style="text-align:center; margin-top:24px;">
+            <a href="https://wa.me/33759089612" target="_blank" rel="noopener" class="btn btn-green">
+                📲 Demander un devis
+            </a>
+        </div>
+        <button onclick="closeModal('serviceModal')" class="modal-close">Fermer</button>
+    </div>
+</div>
+
+<!-- Modal Paiement -->
+<div id="paymentModal" class="modal">
+    <div class="modal-box" style="text-align:center;">
+        <h2 class="modal-title">💳 Paiement en Plusieurs Fois</h2>
+        <p style="color:var(--text-dim); line-height:1.8; margin-bottom:24px;">
+            Contactez-nous sur WhatsApp pour bénéficier du paiement échelonné.
+        </p>
+        <a href="https://wa.me/33759089612?text=Bonjour%20PhoneDeal%2C%20je%20souhaite%20payer%20en%20plusieurs%20fois" target="_blank" rel="noopener" class="btn btn-green">
+            📲 Contacter sur WhatsApp
+        </a>
+        <button onclick="closeModal('paymentModal')" class="modal-close">Fermer</button>
+    </div>
+</div>
+
+<!-- Modal CGV -->
+<div id="cgvModal" class="modal">
+    <div class="modal-box" style="max-width:700px;">
+        <h2 class="modal-title">📄 Conditions Générales de Vente</h2>
+        <div style="font-size:12px; color:var(--text-dim); line-height:1.8; text-align:left;">
+
+            <p style="color:#94a3b8; font-style:italic; margin-bottom:16px; font-size:11px;">Dernière mise à jour : mai 2026 — PhoneDeal France</p>
+
+            <!-- Art 1 -->
+            <h4 style="color:var(--gold); margin:16px 0 6px; font-size:13px;">Article 1 — Identification du vendeur</h4>
+            <p>PhoneDeal France est un vendeur particulier / professionnel spécialisé dans la vente de téléphones, ordinateurs portables et fixes, neufs et d'occasion. Les ventes sont réalisées via les plateformes eBay, Facebook Marketplace et Le Bon Coin. Contact : phonedealfrance@gmail.com — WhatsApp : +33 7 59 08 96 12.</p>
+
+            <!-- Art 2 -->
+            <h4 style="color:var(--gold); margin:16px 0 6px; font-size:13px;">Article 2 — Champ d'application</h4>
+            <p>Les présentes Conditions Générales de Vente (CGV) s'appliquent à toutes les ventes conclues par PhoneDeal France auprès de tout acheteur, qu'il soit particulier ou professionnel, via les plateformes de vente en ligne mentionnées. Tout achat implique l'acceptation pleine et entière des présentes CGV.</p>
+
+            <!-- Art 3 -->
+            <h4 style="color:var(--gold); margin:16px 0 6px; font-size:13px;">Article 3 — Produits proposés</h4>
+            <p><strong style="color:var(--text);">3.1 Produits neufs :</strong> Appareils vendus dans leur emballage d'origine, n'ayant jamais été utilisés, accompagnés de tous les accessoires constructeur.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">3.2 Produits d'occasion :</strong> Appareils ayant déjà servi, triés selon leur état : Très bon état (légères traces d'usage invisibles à l'œil), Bon état (légères traces visibles), État correct (traces d'usage normales, fonctionnement parfait).</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">3.3 Tests et vérifications :</strong> Chaque produit d'occasion est testé avant mise en vente : écran, batterie, caméras, son, haut-parleur, micro, connectivité Wi-Fi, Bluetooth, réseau et tous les boutons. Tout défaut constaté est mentionné dans l'annonce.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">3.4 Photos :</strong> Les photos de l'annonce représentent le produit réel vendu ou un produit similaire. En cas de doute, le client peut demander des photos supplémentaires avant achat.</p>
+
+            <!-- Art 4 -->
+            <h4 style="color:var(--gold); margin:16px 0 6px; font-size:13px;">Article 4 — Prix</h4>
+            <p>Les prix sont indiqués en euros (€) toutes taxes comprises. PhoneDeal France se réserve le droit de modifier ses prix à tout moment. Le prix applicable est celui en vigueur au moment de la confirmation de la commande. Les frais de livraison sont indiqués séparément et s'ajoutent au prix du produit sauf mention contraire dans l'annonce.</p>
+
+            <!-- Art 5 -->
+            <h4 style="color:var(--gold); margin:16px 0 6px; font-size:13px;">Article 5 — Commande et confirmation</h4>
+            <p>Toute commande est réputée ferme et définitive dès la validation du paiement. Un email ou message de confirmation est envoyé à l'acheteur dans les 24 heures suivant la réception du paiement. PhoneDeal France se réserve le droit d'annuler une commande en cas de rupture de stock, d'erreur manifeste de prix ou de suspicion de fraude, avec remboursement intégral de l'acheteur.</p>
+
+            <!-- Art 6 -->
+            <h4 style="color:var(--gold); margin:16px 0 6px; font-size:13px;">Article 6 — Paiement</h4>
+            <p><strong style="color:var(--text);">6.1 Moyens de paiement acceptés :</strong> PayPal (via eBay), virement bancaire, espèces (pour remise en main propre uniquement), paiement en plusieurs fois sur accord préalable.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">6.2 Paiement en plusieurs fois :</strong> Le paiement échelonné est disponible sur demande via WhatsApp. Un accord écrit est nécessaire avant tout envoi. Un acompte minimum de 30% est requis à la commande.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">6.3 Sécurité :</strong> Les transactions effectuées via eBay bénéficient du système de paiement sécurisé de la plateforme. PhoneDeal France ne stocke aucune donnée bancaire.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">6.4 Défaut de paiement :</strong> En cas de non-paiement ou de paiement incomplet, la commande sera annulée de plein droit après mise en demeure restée sans effet sous 48 heures.</p>
+
+            <!-- Art 7 -->
+            <h4 style="color:var(--gold); margin:16px 0 6px; font-size:13px;">Article 7 — Livraison et expédition</h4>
+            <p><strong style="color:var(--text);">7.1 Délais :</strong> Les commandes sont expédiées sous 24 à 48 heures ouvrées après confirmation du paiement, sauf mention contraire dans l'annonce.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">7.2 Transporteurs :</strong> Colissimo, Mondial Relay ou Chronopost selon la taille du colis et la destination. Un numéro de suivi est systématiquement communiqué à l'acheteur.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">7.3 Emballage :</strong> Chaque produit est soigneusement emballé avec protection anti-chocs. La facture et le certificat de garantie sont inclus dans le colis.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">7.4 Remise en main propre :</strong> Possible sur la région Nice / Côte d'Azur sur rendez-vous fixé à l'avance.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">7.5 Retard de livraison :</strong> PhoneDeal France ne peut être tenu responsable des retards imputables au transporteur. En cas de colis perdu, une déclaration de perte sera ouverte et l'acheteur remboursé ou renvoyé à l'identique.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">7.6 Colis endommagé :</strong> L'acheteur doit inspecter le colis à la réception en présence du livreur et signaler tout dommage immédiatement. Des photos doivent être envoyées à PhoneDeal France sous 24h.</p>
+
+            <!-- Art 8 -->
+            <h4 style="color:var(--gold); margin:16px 0 6px; font-size:13px;">Article 8 — Garanties</h4>
+            <p><strong style="color:var(--text);">8.1 Produits neufs :</strong> Garantie constructeur de 12 mois. En cas de panne, le produit sera réparé ou échangé selon les conditions du constructeur.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">8.2 Produits d'occasion :</strong> Garantie PhoneDeal France de 3 à 6 mois selon l'état du produit, à compter de la date de réception. Cette garantie couvre les pannes matérielles non liées à un choc, une immersion ou une mauvaise utilisation.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">8.3 Réparations :</strong> Garantie de 1 mois sur les pièces remplacées et la main d'œuvre à compter de la date de restitution de l'appareil.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">8.4 Exclusions de garantie :</strong> La garantie ne couvre pas les dommages causés par : chocs physiques, immersion dans un liquide, mauvaise utilisation, tentative de réparation par un tiers non autorisé, oxydation, surtension électrique ou virus logiciels.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">8.5 Batterie :</strong> La batterie est un consommable. Son état au moment de la vente est précisé dans l'annonce. La dégradation naturelle de la batterie avec le temps ne constitue pas un défaut garanti.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">8.6 Mise en œuvre de la garantie :</strong> Pour faire valoir la garantie, l'acheteur doit contacter PhoneDeal France via WhatsApp ou email avec photos ou vidéo du problème. Les frais de retour sont à la charge du vendeur si la panne est avérée.</p>
+
+            <!-- Art 9 -->
+            <h4 style="color:var(--gold); margin:16px 0 6px; font-size:13px;">Article 9 — Droit de rétractation et retours</h4>
+            <p><strong style="color:var(--text);">9.1 Produits neufs :</strong> Conformément à la législation française, l'acheteur dispose d'un délai de 14 jours calendaires à compter de la réception pour exercer son droit de rétractation, sans avoir à justifier de motifs. Le produit doit être retourné dans son emballage d'origine, non ouvert ou remis en état d'origine.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">9.2 Produits d'occasion :</strong> Les retours sont acceptés dans un délai de 7 jours si le produit ne correspond pas à la description de l'annonce ou présente un défaut non mentionné.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">9.3 Procédure de retour :</strong> Contacter PhoneDeal France avant tout retour pour obtenir l'accord et les instructions d'expédition. Tout retour sans accord préalable sera refusé.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">9.4 Remboursement :</strong> Le remboursement est effectué dans un délai de 7 jours ouvrés après réception et vérification du produit retourné, via le même moyen de paiement que celui utilisé lors de l'achat.</p>
+            <p style="margin-top:6px;"><strong style="color:var(--text);">9.5 Frais de retour :</strong> En cas de rétractation sans motif, les frais de retour sont à la charge de l'acheteur. En cas de défaut constaté ou d'erreur de PhoneDeal France, les frais sont pris en charge par le vendeur.</p>
+
+            <!-- Art 10 -->
+            <h4 style="color:var(--gold); margin:16px 0 6px; font-size:13px;">Article 10 — Service après-vente (SAV)</h4>
+            <p>PhoneDeal France propose un service de réparation pour téléphones et ordinateurs. Les devis sont gratuits et sans engagement. Les réparations sont effectuées dans un délai de 24 à 72 heures selon la disponibilité des pièces. Un bon de dépôt est remis à chaque client. PhoneDeal France décline toute responsabilité en cas de perte de données lors d'une réparation — il est conseillé d'effectuer une sauvegarde avant tout dépôt.</p>
+
+            <!-- Art 11 -->
+            <h4 style="color:var(--gold); margin:16px 0 6px; font-size:13px;">Article 11 — Responsabilité</h4>
+            <p>PhoneDeal France s'engage à fournir des produits conformes à leur description. La responsabilité de PhoneDeal France ne saurait être engagée en cas de : mauvaise utilisation du produit par l'acheteur, dommages indirects ou immatériels, force majeure (grèves, catastrophes naturelles, épidémies), perte de données sur les appareils vendus ou réparés. Il est fortement recommandé à l'acheteur d'effacer ses données personnelles avant tout envoi d'un appareil.</p>
+
+            <!-- Art 12 -->
+            <h4 style="color:var(--gold); margin:16px 0 6px; font-size:13px;">Article 12 — Protection des données personnelles</h4>
+            <p>Les informations personnelles collectées (nom, adresse, email, téléphone) sont utilisées uniquement dans le cadre du traitement des commandes et du service après-vente. Elles ne sont jamais cédées à des tiers. Conformément au RGPD, l'acheteur dispose d'un droit d'accès, de rectification et de suppression de ses données en contactant PhoneDeal France par email.</p>
+
+            <!-- Art 13 -->
+            <h4 style="color:var(--gold); margin:16px 0 6px; font-size:13px;">Article 13 — Propriété intellectuelle</h4>
+            <p>Tous les contenus présents sur le site PhoneDeal (textes, logos, visuels) sont la propriété de PhoneDeal France. Toute reproduction, même partielle, est interdite sans autorisation préalable écrite.</p>
+
+            <!-- Art 14 -->
+            <h4 style="color:var(--gold); margin:16px 0 6px; font-size:13px;">Article 14 — Litiges et médiation</h4>
+            <p>En cas de litige, l'acheteur est invité à contacter PhoneDeal France en priorité pour trouver une solution amiable. En l'absence de résolution amiable dans un délai de 30 jours, l'acheteur peut recourir à un médiateur de la consommation conformément aux articles L611-1 et suivants du Code de la consommation. Pour les achats effectués via eBay, la procédure de résolution de litiges de la plateforme peut également être utilisée.</p>
+
+            <!-- Art 15 -->
+            <h4 style="color:var(--gold); margin:16px 0 6px; font-size:13px;">Article 15 — Droit applicable</h4>
+            <p>Les présentes CGV sont soumises au droit français. En cas de litige non résolu à l'amiable, les tribunaux compétents du ressort de Nice (06) seront seuls compétents.</p>
+
+            <p style="margin-top:20px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.08); font-size:11px; color:#64748b; text-align:center;">
+                © 2026 PhoneDeal France — phonedealfrance@gmail.com — +33 7 59 08 96 12
+            </p>
+        </div>
+        <button onclick="closeModal('cgvModal')" class="modal-close">Fermer</button>
+    </div>
+</div>
+
+<script>
+    /* ── Hamburger ── */
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+    });
+    function closeMenu() {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+    }
+
+    /* ── Modales ── */
+    function openModal(id)  { document.getElementById(id).classList.add('open'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+    function openPayment()  { openModal('paymentModal'); }
+    function openCGV()      { openModal('cgvModal'); }
+
+    document.querySelectorAll('.modal').forEach(m => {
+        m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+    });
+
+    /* ── Services ── */
+    const services = [
+        { title: "📱 Réparation Téléphone", items: ["• Écran cassé, batterie, charge", "• Problème de son / micro", "• Remplacement caméra & bouton"] },
+        { title: "💻 Réparation PC",        items: ["• Restauration Windows", "• Changement disque / SSD", "• Réparation clavier & écran"] },
+        { title: "🔄 Restauration Données", items: ["• Récupération photos & vidéos", "• Récupération fichiers importants", "• Disque dur / SSD endommagé"] }
+    ];
+    function showService(i) {
+        const s = services[i];
+        document.getElementById('modalTitle').textContent = s.title;
+        document.getElementById('modalList').innerHTML = s.items.map(t => `<li>${t}</li>`).join('');
+        openModal('serviceModal');
+    }
+    function closeServiceModal() { closeModal('serviceModal'); }
+
+    /* ── Avis ── */
+    function openAvis() { alert("⭐ 4.9/5 sur +500 avis\n\nService rapide et de qualité !"); }
+</script>
+</body>
+</html>
